@@ -1,0 +1,133 @@
+================================================================================
+ÁRVORE GERADORA MÍNIMA (AGM) - Algoritmo de Kruskal
+================================================================================
+
+Total de arestas: 123
+Custo total: 139.21
+
+Arestas da AGM:
+--------------------------------------------------------------------------------
+  1. [  2] Andrade’s Beer                 <---> [ 82] Marina’s Bar                   :     0.00
+  2. [  2] Andrade’s Beer                 <---> [101] Regis Bar                      :     0.00
+  3. [  2] Andrade’s Beer                 <---> [107] Santuário Retrô                :     0.00
+  4. [  4] Armazém Santa Amélia           <---> [ 79] Magnífico Quintal              :     0.00
+  5. [  4] Armazém Santa Amélia           <---> [ 92] Planeta Lúpulo                 :     0.00
+  6. [  6] Azougue Fogo e Bar             <---> [ 90] Pé de Cana                     :     0.00
+  7. [  6] Azougue Fogo e Bar             <---> [ 93] PoiZé Bar e Petisqueira        :     0.00
+  8. [  9] Bar Bendita Baderna            <---> [112] Spetim                         :     0.00
+  9. [ 10] Bar da Cíntia                  <---> [117] Tropeiro do Lisboa             :     0.00
+ 10. [ 13] Bar da Silvânia                <---> [118] Us Motoca                      :     0.00
+ 11. [ 15] Bar do Bem                     <---> [120] Xico da Kafua                  :     0.00
+ 12. [ 17] Bar do Nelson                  <---> [ 78] Locomotiva’s Bar               :     0.00
+ 13. [ 17] Bar do Nelson                  <---> [115] Toca do Ogro                   :     0.00
+ 14. [ 18] Bar do Primo                   <---> [ 91] Pé de Goiaba                   :     0.00
+ 15. [ 22] Bar Du Du                      <---> [109] Silvio’s Bar                   :     0.00
+ 16. [ 24] Bar e Restaurante do Joãozinho <---> [ 63] Espetinho do Boi               :     0.00
+ 17. [ 25] Bar Estabelecimento            <---> [ 62] Ember BBQ                      :     0.00
+ 18. [ 26] Bar Junto Juntinho             <---> [ 56] Conectados Bar                 :     0.00
+ 19. [ 26] Bar Junto Juntinho             <---> [ 94] Prado Beer                     :     0.00
+ 20. [ 28] Bar Pompéu                     <---> [ 99] Rancho do Manoel               :     0.00
+ 21. [ 30] Bar Temático Sta. Teresa       <---> [ 70] Iracema Bar                    :     0.00
+ 22. [ 31] Barrigudinha Buteco            <---> [ 88] Parada 10.95 Bar               :     0.00
+ 23. [ 35] Benjamin Bar                   <---> [ 72] Já To Inno                     :     0.00
+ 24. [ 42] Buteco’s Bar                   <---> [ 73] Juzé Bar                       :     0.00
+ 25. [ 44] Café Bahia                     <---> [ 45] Café Palhares                  :     0.00
+ 26. [ 44] Café Bahia                     <---> [ 59] Dona Dora                      :     0.00
+ 27. [ 48] Cantina Arte Quintal           <---> [103] Resenha da Naty                :     0.00
+ 28. [ 51] Cervejaria Pajé                <---> [105] S.O.S PUB                      :     0.00
+ 29. [ 61] Dona Suica                     <---> [102] Rei do Peixe                   :     0.00
+ 30. [ 67] Garagge Vintage                <---> [ 89] Parada do Sabor                :     0.00
+ 31. [ 67] Garagge Vintage                <---> [ 95] Prosa Boa                      :     0.00
+ 32. [ 75] Koqueiros Bar                  <---> [ 98] Quitandas da Tia Nice Bar      :     0.00
+ 33. [ 75] Koqueiros Bar                  <---> [110] Sinhá Erozitha Bistrôteco      :     0.00
+ 34. [ 83] Mineiros Beer                  <---> [111] Sô Bar                         :     0.00
+ 35. [ 83] Mineiros Beer                  <---> [121] Xico do Churrasco              :     0.00
+ 36. [ 85] Nosso Spetim                   <---> [ 86] O Fino do Alho                 :     0.00
+ 37. [104] Restaurante Jorge Americano    <---> [116] Toninho – Alto Forno           :     0.00
+ 38. [104] Restaurante Jorge Americano    <---> [119] Xambar                         :     0.00
+ 39. [113] Tanganica Art Bar              <---> [114] The Butcher                    :     0.00
+ 40. [ 42] Buteco’s Bar                   <---> [ 85] Nosso Spetim                   :     0.07
+ 41. [ 33] Bazin Bar                      <---> [ 39] Buteco do Lili                 :     0.14
+ 42. [ 37] Botequim Buritis               <---> [ 65] Espettinho.com                 :     0.18
+ 43. [  2] Andrade’s Beer                 <---> [104] Restaurante Jorge Americano    :     0.23
+ 44. [ 10] Bar da Cíntia                  <---> [ 12] Bar da Lu                      :     0.36
+ 45. [ 27] Bar Mania Mineira              <---> [ 50] Casa da Madrinha               :     0.39
+ 46. [ 17] Bar do Nelson                  <---> [ 49] Cantinho da Baiana             :     0.47
+ 47. [ 57] COSMOS                         <---> [ 78] Locomotiva’s Bar               :     0.50
+ 48. [ 11] Bar da Fia                     <---> [ 42] Buteco’s Bar                   :     0.53
+ 49. [ 20] Bar do Romeu                   <---> [ 52] Chapa Mágica                   :     0.54
+ 50. [ 46] Camisola Bar                   <---> [ 96] Quinteiro Bar e Restaurante    :     0.55
+ 51. [ 64] Espetinhos do Paulão           <---> [ 82] Marina’s Bar                   :     0.55
+ 52. [ 96] Quinteiro Bar e Restaurante    <---> [106] Santa Boemia                   :     0.58
+ 53. [ 96] Quinteiro Bar e Restaurante    <---> [ 98] Quitandas da Tia Nice Bar      :     0.59
+ 54. [ 19] Bar do Regis                   <---> [ 32] Barzim dos amigos              :     0.61
+ 55. [ 66] Fogão de Minas                 <---> [ 76] Lá Ele Bar                     :     0.62
+ 56. [ 54] Chopp da Esquina               <---> [ 91] Pé de Goiaba                   :     0.63
+ 57. [  8] Bar Bambú                      <---> [ 21] Bar dos Meninos                :     0.64
+ 58. [ 64] Espetinhos do Paulão           <---> [ 70] Iracema Bar                    :     0.69
+ 59. [ 36] Boteco 86                      <---> [ 72] Já To Inno                     :     0.74
+ 60. [ 46] Camisola Bar                   <---> [ 74] Köbes Emporium Bar             :     0.78
+ 61. [ 85] Nosso Spetim                   <---> [108] Seu Braz                       :     0.78
+ 62. [ 25] Bar Estabelecimento            <---> [ 90] Pé de Cana                     :     0.79
+ 63. [  3] Arcos Bar                      <---> [ 81] Mamute Bar                     :     0.87
+ 64. [ 20] Bar do Romeu                   <---> [ 29] Bar Stella                     :     0.92
+ 65. [ 51] Cervejaria Pajé                <---> [ 53] Choperia América Norte Sul     :     0.93
+ 66. [ 10] Bar da Cíntia                  <---> [100] Recanto Vovó Tela              :     0.95
+ 67. [  0] Alexandre’s Bar                <---> [ 66] Fogão de Minas                 :     1.00
+ 68. [  2] Andrade’s Beer                 <---> [ 38] Botequim de Lourdes            :     1.00
+ 69. [ 21] Bar dos Meninos                <---> [ 31] Barrigudinha Buteco            :     1.03
+ 70. [ 55] Companhia do Dino              <---> [ 99] Rancho do Manoel               :     1.03
+ 71. [  7] Baiuca                         <---> [ 90] Pé de Cana                     :     1.05
+ 72. [ 27] Bar Mania Mineira              <---> [ 82] Marina’s Bar                   :     1.14
+ 73. [ 18] Bar do Primo                   <---> [ 23] Bar e Restaurante Bom Sabor    :     1.15
+ 74. [ 22] Bar Du Du                      <---> [106] Santa Boemia                   :     1.15
+ 75. [ 64] Espetinhos do Paulão           <---> [ 71] Ivo Grill                      :     1.19
+ 76. [  2] Andrade’s Beer                 <---> [ 34] Beco Restaurante               :     1.20
+ 77. [  3] Arcos Bar                      <---> [ 87] Oratório Bar                   :     1.20
+ 78. [ 48] Cantina Arte Quintal           <---> [ 84] Mulão                          :     1.24
+ 79. [  1] Amarelim do Prado              <---> [ 26] Bar Junto Juntinho             :     1.24
+ 80. [ 44] Café Bahia                     <---> [ 71] Ivo Grill                      :     1.26
+ 81. [ 19] Bar do Regis                   <---> [ 54] Chopp da Esquina               :     1.28
+ 82. [ 46] Camisola Bar                   <---> [112] Spetim                         :     1.29
+ 83. [  3] Arcos Bar                      <---> [  7] Baiuca                         :     1.30
+ 84. [ 41] Buteco Tô D’Boa                <---> [ 42] Buteco’s Bar                   :     1.44
+ 85. [ 34] Beco Restaurante               <---> [ 81] Mamute Bar                     :     1.49
+ 86. [ 10] Bar da Cíntia                  <---> [ 61] Dona Suica                     :     1.49
+ 87. [  1] Amarelim do Prado              <---> [ 50] Casa da Madrinha               :     1.50
+ 88. [  1] Amarelim do Prado              <---> [ 47] Canela Amarela                 :     1.51
+ 89. [ 28] Bar Pompéu                     <---> [ 52] Chapa Mágica                   :     1.56
+ 90. [ 14] Bar do Bartolomeu              <---> [ 69] Golden Grill                   :     1.57
+ 91. [  5] Avalanche Espeteria            <---> [ 42] Buteco’s Bar                   :     1.58
+ 92. [ 13] Bar da Silvânia                <---> [ 51] Cervejaria Pajé                :     1.61
+ 93. [  5] Avalanche Espeteria            <---> [ 61] Dona Suica                     :     1.62
+ 94. [ 24] Bar e Restaurante do Joãozinho <---> [ 97] Quioxque Botequim Carioca      :     1.63
+ 95. [ 40] Buteco do Rod                  <---> [ 48] Cantina Arte Quintal           :     1.69
+ 96. [ 39] Buteco do Lili                 <---> [ 67] Garagge Vintage                :     1.71
+ 97. [ 58] Deck Boi na Brasa              <---> [123] Zoo Bar                        :     1.79
+ 98. [ 16] Bar do Kim                     <---> [ 54] Chopp da Esquina               :     1.86
+ 99. [ 47] Canela Amarela                 <---> [ 68] Geraldin da Cida               :     1.95
+100. [ 23] Bar e Restaurante Bom Sabor    <---> [113] Tanganica Art Bar              :     2.00
+101. [ 66] Fogão de Minas                 <---> [ 67] Garagge Vintage                :     2.06
+102. [ 58] Deck Boi na Brasa              <---> [ 83] Mineiros Beer                  :     2.11
+103. [ 24] Bar e Restaurante do Joãozinho <---> [ 77] Leo da Quadra                  :     2.33
+104. [  5] Avalanche Espeteria            <---> [ 29] Bar Stella                     :     2.46
+105. [ 67] Garagge Vintage                <---> [122] Zé Bolacha                     :     2.47
+106. [ 80] Magrelo’s Bar                  <---> [ 88] Parada 10.95 Bar               :     2.48
+107. [ 34] Beco Restaurante               <---> [109] Silvio’s Bar                   :     2.50
+108. [ 36] Boteco 86                      <---> [113] Tanganica Art Bar              :     2.50
+109. [113] Tanganica Art Bar              <---> [120] Xico da Kafua                  :     2.55
+110. [ 31] Barrigudinha Buteco            <---> [ 84] Mulão                          :     2.65
+111. [  0] Alexandre’s Bar                <---> [ 29] Bar Stella                     :     2.73
+112. [ 35] Benjamin Bar                   <---> [ 84] Mulão                          :     2.84
+113. [ 29] Bar Stella                     <---> [ 43] Butiquim On Cê Tá?             :     2.94
+114. [ 41] Buteco Tô D’Boa                <---> [ 79] Magnífico Quintal              :     3.06
+115. [ 24] Bar e Restaurante do Joãozinho <---> [ 69] Golden Grill                   :     3.14
+116. [  4] Armazém Santa Amélia           <---> [123] Zoo Bar                        :     3.23
+117. [ 80] Magrelo’s Bar                  <---> [ 83] Mineiros Beer                  :     3.35
+118. [ 15] Bar do Bem                     <---> [118] Us Motoca                      :     3.50
+119. [ 57] COSMOS                         <---> [112] Spetim                         :     3.70
+120. [ 26] Bar Junto Juntinho             <---> [113] Tanganica Art Bar              :     4.20
+121. [ 16] Bar do Kim                     <---> [ 97] Quioxque Botequim Carioca      :     4.74
+122. [ 37] Botequim Buritis               <---> [ 68] Geraldin da Cida               :     6.04
+123. [ 60] Dona Ju Gastro Bar             <---> [ 78] Locomotiva’s Bar               :     8.23
+================================================================================

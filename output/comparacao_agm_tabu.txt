@@ -1,0 +1,21 @@
+================================================================================
+COMPARAÇÃO: AGM de Kruskal vs Tabu Search
+================================================================================
+
+RESULTADOS:
+--------------------------------------------------------------------------------
+AGM (Kruskal):
+  Custo total: 139.21
+  Número de arestas: 123
+  Grau médio: 1.98
+  Vértices folha: 48
+
+Tabu Search:
+  Custo total: 4419.07
+  Distância percorrida: 1451.86
+  Bares visitados: 124
+
+Comparação:
+  Diferença (custo): 4279.86
+  Percentual acima: 3074.39%
+  Qualidade: PODE MELHORAR
