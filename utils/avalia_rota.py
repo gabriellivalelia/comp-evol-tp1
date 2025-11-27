@@ -97,17 +97,12 @@ def avaliar_rota(
         total_tempo += visita_min
         hora_atual = hora_atual + timedelta(minutes=visita_min)
 
-        # nota do bar (coluna pode se chamar 'nota' ou 'Avaliação' — tentamos ambas)
+        # nota do bar
         row = bares.iloc[destino]
         nota = 0.0
-        if "nota" in bares.columns:
+        if "Nota" in bares.columns:
             try:
-                nota = float(row.get("nota", 0) or 0)
-            except Exception:
-                nota = 0.0
-        elif "Avaliação" in bares.columns:
-            try:
-                nota = float(row.get("Avaliação", 0) or 0)
+                nota = float(row.get("Nota", 0) or 0)
             except Exception:
                 nota = 0.0
 
