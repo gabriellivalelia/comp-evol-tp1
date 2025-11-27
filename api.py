@@ -248,6 +248,7 @@ def optimize_route():
         hora_atual = hora_inicio_geral
         dia_atual = data_inicio
         total_duration = 0
+        total_distance_km = 0.0
 
         for i in range(len(melhor_rota)):
             bar_idx = melhor_rota[i]
@@ -346,6 +347,13 @@ def optimize_route():
                 total_duration += (
                     60 + tempo_viagem_minutos
                 )  # 60 min de visita + tempo de viagem
+                # Somar distância entre pontos a partir da matriz de distâncias carregada
+                try:
+                    distancia_km = float(distancias[bar_idx][prox])
+                    total_distance_km += distancia_km
+                except Exception:
+                    # Em caso de problema com índice/matriz, ignorar e continuar
+                    pass
 
             if hora_atual.time() > hora_fim and hora_atual.date() >= data_fim:
                 break
@@ -383,9 +391,9 @@ def optimize_route():
                 }
             )
 
-        # Preparar estatísticas (distância será calculada no frontend)
+        # Preparar estatísticas
         stats = {
-            "totalDistance": "Calculando...",  # Será calculado no frontend com Google Maps
+            "totalDistance": f"{total_distance_km:.2f} km",
             "totalDuration": f"{total_duration} min",
             "numberOfStops": len(bars_result),
             "numberOfDays": len(dias_visitacao),
