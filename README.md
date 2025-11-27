@@ -77,7 +77,6 @@ Os dados dos bares e matrizes de distância/tempo estão na pasta `data/`:
 
 ## 👥 Autores
 
-- Gabriel Silva de Araújo
 - Gabrielli Valelia Sousa da Silva
 - Júlia Diniz Rodrigues
 
