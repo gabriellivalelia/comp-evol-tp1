@@ -21,8 +21,115 @@ CORS(
 
 # Carregar dados na inicialização
 df = pd.read_csv("data/bares.csv")
+
+# Renomear coluna "Avaliação" para "Nota" se existir
+if "Avaliação" in df.columns:
+    df.rename(columns={"Avaliação": "Nota"}, inplace=True)
+
+# Converter coluna Nota: trocar vírgula por ponto e converter para float
+if "Nota" in df.columns:
+    df["Nota"] = df["Nota"].astype(str).str.replace(",", ".").astype(float)
+
 with open("data/distancias.pkl", "rb") as f:
     distancias, tempos = pickle.load(f)
+
+
+def converter_coordenada(valor, padrao, tipo="lat"):
+    """Converte coordenada em vários formatos para decimal e valida a faixa.
+
+    Trata números inteiros grandes (ex.: -19937000 -> -19.937000), strings com
+    vírgula como separador decimal, pontos como separador de milhar, e outros casos.
+    """
+    import re
+
+    def validar(v):
+        try:
+            v = float(v)
+        except Exception:
+            return False
+        if tipo == "lat":
+            return -90.0 <= v <= 90.0
+        return -180.0 <= v <= 180.0
+
+    if valor is None:
+        return padrao
+
+    # 1) Números já (int/float)
+    try:
+        if isinstance(valor, (int, float)):
+            v = float(valor)
+            if abs(v) > 180:
+                v = v / 1e6
+            if validar(v):
+                return v
+            v2 = float(valor) / 1e6
+            if validar(v2):
+                return v2
+    except Exception:
+        pass
+
+    s = str(valor).strip()
+    if s == "":
+        return padrao
+
+    s_clean = re.sub(r"[^0-9,\.\-]", "", s)
+
+    try:
+        if "." in s_clean and "," in s_clean:
+            if s_clean.rfind(",") > s_clean.rfind("."):
+                s_try = s_clean.replace(".", "").replace(",", ".")
+                v = float(s_try)
+                if validar(v):
+                    return v
+            else:
+                s_try = s_clean.replace(",", "")
+                v = float(s_try)
+                if validar(v):
+                    return v
+
+        if s_clean.count(".") > 1:
+            s_digits = re.sub(r"[^0-9\-]", "", s_clean)
+            if s_digits.startswith("-"):
+                sign = -1
+                s_digits = s_digits[1:]
+            else:
+                sign = 1
+            if len(s_digits) >= 6:
+                v = sign * (int(s_digits) / 1e6)
+                if validar(v):
+                    return v
+
+        s_simple = s_clean.replace(" ", "").replace(",", ".")
+        if s_simple.count(".") > 1:
+            parts = s_simple.split(".")
+            s_simple = "".join(parts[:-1]) + "." + parts[-1]
+
+        v = float(s_simple)
+        if validar(v):
+            return v
+
+        if abs(v) > 180:
+            v2 = v / 1e6
+            if validar(v2):
+                return v2
+    except Exception:
+        pass
+
+    try:
+        s_digits = re.sub(r"[^0-9\-]", "", s)
+        if s_digits == "":
+            return padrao
+        sign = -1 if s_digits.startswith("-") else 1
+        if sign == -1:
+            s_digits = s_digits[1:]
+        if len(s_digits) >= 6:
+            v = sign * (int(s_digits) / 1e6)
+            if validar(v):
+                return v
+    except Exception:
+        pass
+
+    return padrao
 
 
 @app.route("/api/health", methods=["GET"])
@@ -46,7 +153,9 @@ def get_bars():
             {
                 "id": int(idx),
                 "name": bar["Nome do Buteco"],
-                "rating": float(bar.get("Nota", 4.5)) if "Nota" in bar else 4.5,
+                "rating": float(bar["Nota"])
+                if "Nota" in bar and pd.notnull(bar["Nota"])
+                else 4.5,
             }
         )
     return jsonify(bares_list)
@@ -79,7 +188,6 @@ def optimize_route():
         "startTime": "16:00",
         "endTime": "23:00",
         "startPoint": "Nome do Bar Inicial",
-        "daysOfWeek": ["Segunda", "Terça"],  // opcional
         "minRating": 4.0,  // opcional
         "menuOptions": []  // opcional
     }
@@ -115,6 +223,49 @@ def optimize_route():
     try:
         data = request.json
         print("📥 Recebida requisição de otimização")
+
+        if not data:
+            return jsonify({"error": "Nenhum dado recebido", "success": False}), 400
+
+        # Validar dados de entrada
+        required_fields = ["startDate", "endDate", "startTime", "endTime", "startPoint"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify(
+                    {"error": f"Campo obrigatório ausente: {field}", "success": False}
+                ), 400
+
+        # Parsear datas e horários
+        print("📅 Parseando datas...")
+        data_inicio = datetime.strptime(data["startDate"], "%Y-%m-%d").date()
+        data_fim = datetime.strptime(data["endDate"], "%Y-%m-%d").date()
+        hora_inicio = datetime.strptime(data["startTime"], "%H:%M").time()
+        hora_fim = datetime.strptime(data["endTime"], "%H:%M").time()
+        print(f"   Período: {data_inicio} a {data_fim}, {hora_inicio} - {hora_fim}")
+
+        # Validação de datas e horários
+        hoje = datetime.now().date()
+        if data_inicio < hoje:
+            return jsonify(
+                {
+                    "error": "A data de início deve ser maior ou igual ao dia atual.",
+                    "success": False,
+                }
+            ), 400
+        if data_fim < data_inicio:
+            return jsonify(
+                {
+                    "error": "A data de fim deve ser igual ou posterior à data de início.",
+                    "success": False,
+                }
+            ), 400
+        if data_inicio == data_fim and hora_fim <= hora_inicio:
+            return jsonify(
+                {
+                    "error": "O horário de término deve ser posterior ao horário de início para o mesmo dia.",
+                    "success": False,
+                }
+            ), 400
 
         if not data:
             return jsonify({"error": "Nenhum dado recebido", "success": False}), 400
@@ -224,10 +375,10 @@ def optimize_route():
         hora_fim_geral = datetime.combine(data_fim, hora_fim)
         tempo_visita = timedelta(hours=1)
 
-        # Executar otimização
+        # Executar otimização com parâmetros da configuração rápida otimizada
         print("🚀 Executando Tabu Search...")
         alpha, beta = 1.0, 25.0
-        melhor_rota, custo = tabu_search(
+        melhor_rota, custo, historico = tabu_search(
             rota_inicial,
             tempos,
             df,
@@ -236,11 +387,15 @@ def optimize_route():
             tempo_visita,
             alpha=alpha,
             beta=beta,
-            tabu_tam=15,
-            max_iter=20,
+            tabu_tam=10,
+            max_iter=100,
+            max_iter_sem_melhoria=30,
+            usar_solucao_inicial_inteligente=True,
+            verbose=True,
         )
         print(f"✅ Otimização concluída! Custo: {custo:.2f}")
         print(f"   Rota otimizada tem {len(melhor_rota)} bares")
+        print(f"   Iterações realizadas: {len(historico.get('iteracao', []))}")
 
         # Formatar resultado para o frontend
         print("📦 Formatando resultado...")
@@ -281,48 +436,9 @@ def optimize_route():
 
             hora_saida = hora_atual + tempo_visita
 
-            # Obter coordenadas (converter formato brasileiro para decimal)
-            def converter_coordenada(valor, padrao):
-                """
-                Converte coordenada de vários formatos para decimal
-                Exemplos: '-19.932.821' → -19.932821, '-19,932821' → -19.932821
-                """
-                try:
-                    if isinstance(valor, str):
-                        # Contar quantos pontos e vírgulas existem
-                        num_pontos = valor.count(".")
-                        num_virgulas = valor.count(",")
-
-                        # Se tem mais de um ponto, remover todos (são separadores de milhar)
-                        if num_pontos > 1:
-                            valor_limpo = valor.replace(".", "")
-                            # Adicionar ponto decimal na posição correta (últimos 6 dígitos)
-                            # -19932821 → -19.932821
-                            if valor_limpo.startswith("-"):
-                                valor_limpo = (
-                                    valor_limpo[0]
-                                    + valor_limpo[1:3]
-                                    + "."
-                                    + valor_limpo[3:]
-                                )
-                            else:
-                                valor_limpo = valor_limpo[:2] + "." + valor_limpo[2:]
-                        # Se tem vírgula, trocar por ponto
-                        elif num_virgulas > 0:
-                            valor_limpo = valor.replace(",", ".")
-                        else:
-                            valor_limpo = valor
-
-                        return float(valor_limpo)
-                    return float(valor)
-                except (ValueError, TypeError) as e:
-                    print(
-                        f"⚠️  Erro ao converter coordenada '{valor}': {e}. Usando padrão: {padrao}"
-                    )
-                    return padrao
-
-            lat = converter_coordenada(bar.get("Latitude"), -19.9167)
-            lng = converter_coordenada(bar.get("Longitude"), -43.9345)
+            # Obter coordenadas (usar função de nível de módulo)
+            lat = converter_coordenada(bar.get("Latitude"), -19.9167, tipo="lat")
+            lng = converter_coordenada(bar.get("Longitude"), -43.9345, tipo="lng")
 
             bars_result.append(
                 {
@@ -331,7 +447,9 @@ def optimize_route():
                     "address": bar.get(
                         "Endereço", f"{bar['Nome do Buteco']}, Belo Horizonte - MG"
                     ),
-                    "rating": float(bar.get("Nota", 4.5)),
+                    "rating": float(bar["Nota"])
+                    if "Nota" in bar and pd.notnull(bar["Nota"])
+                    else 4.5,
                     "lat": lat,
                     "lng": lng,
                     "arrivalTime": hora_atual.strftime("%H:%M"),
@@ -404,7 +522,7 @@ def optimize_route():
             f"✅ Rota otimizada: {len(bars_result)} bares em {len(dias_visitacao)} dias"
         )
         print(f"⏱️  Duração total calculada: {total_duration} min")
-        print("📏 Distância total será calculada no frontend com Google Maps")
+        print(f"📏 Distância total calculada: {total_distance_km:.2f} km")
         return jsonify(
             {
                 "bars": bars_result,  # Lista flat para compatibilidade
@@ -432,11 +550,13 @@ def get_bar_coordinates(bar_name):
         return jsonify({"error": "Bar não encontrado"}), 404
 
     bar_data = bar.iloc[0]
+    lat = converter_coordenada(bar_data.get("Latitude"), -19.9167, tipo="lat")
+    lng = converter_coordenada(bar_data.get("Longitude"), -43.9345, tipo="lng")
     return jsonify(
         {
             "name": bar_data["Nome do Buteco"],
-            "lat": float(bar_data.get("Latitude", -19.9167)),
-            "lng": float(bar_data.get("Longitude", -43.9345)),
+            "lat": lat,
+            "lng": lng,
             "address": bar_data.get(
                 "Endereço", f"{bar_data['Nome do Buteco']}, Belo Horizonte - MG"
             ),

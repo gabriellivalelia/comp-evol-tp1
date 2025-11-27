@@ -3,7 +3,7 @@
 
 ## 🏆 Melhor Algoritmo
 
-O melhor algoritmo foi **Tabu Config 3 (Exploratória)** com custo de **184.82 km**.
+O melhor algoritmo foi **Tabu Config 2 (Balanceada)** com custo de **179.36 km**.
 
 ## ⚡ Algoritmo Mais Rápido
 
@@ -12,10 +12,10 @@ O algoritmo mais rápido foi **Kruskal (AGM)** com tempo de execução de **0.01
 ## 📈 Comparação entre Heurísticas
 
 ### Tabu Search vs ACO:
-- **Melhor Tabu**: Tabu Config 3 (Exploratória) - 184.82 km
-- **Melhor ACO**: ACO Config 3 (Exploratória) - 253.43 km
-- **Diferença de custo**: +37.1% (ACO vs Tabu)
-- **Diferença de tempo**: 13.3x (ACO é 13.3x mais lento)
+- **Melhor Tabu**: Tabu Config 2 (Balanceada) - 179.36 km
+- **Melhor ACO**: ACO Config 3 (Exploratória) - 249.76 km
+- **Diferença de custo**: +39.3% (ACO vs Tabu)
+- **Diferença de tempo**: 11.8x (ACO é 11.8x mais lento)
 
 ### Análise Qualitativa:
 
@@ -32,9 +32,9 @@ O algoritmo mais rápido foi **Kruskal (AGM)** com tempo de execução de **0.01
 - **Amplitude**: 114.60 km
 
 ### Melhor Heurística:
-- **Custo**: 184.82 km
-- **Posição**: 32.8% acima do limite inferior
-- **Qualidade**: 27.2% melhor que o limite superior
+- **Custo**: 179.36 km
+- **Posição**: 28.8% acima do limite inferior
+- **Qualidade**: 29.3% melhor que o limite superior
 - **Status**: ✅ DENTRO do intervalo válido
 
 ## 💡 Observações sobre Heurísticas Construtivas
@@ -56,4 +56,4 @@ O algoritmo mais rápido foi **Kruskal (AGM)** com tempo de execução de **0.01
 1. **Tabu Search** é superior ao ACO neste problema
 2. Todas configurações do Tabu ficaram dentro do intervalo teórico
 3. O ACO também apresentou bons resultados
-4. A diferença de 13.3x no tempo de execução favorece o Tabu Search
+4. A diferença de 11.8x no tempo de execução favorece o Tabu Search
